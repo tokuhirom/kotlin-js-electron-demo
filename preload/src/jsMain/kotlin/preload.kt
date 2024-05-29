@@ -7,7 +7,7 @@ external interface MyApi {
 
 fun main() {
     val myApi : MyApi = jso {
-        node = "process.versions.node!"
+        node = "process.versions.node!ZANSU!"
     }
     contextBridge.exposeInMainWorld("versions", myApi)
 }

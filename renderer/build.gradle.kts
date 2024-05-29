@@ -6,6 +6,7 @@ kotlin {
     js {
         moduleName = "renderer"
         browser()
+        useEsModules()
         binaries.executable()
     }
     sourceSets {
@@ -27,3 +28,17 @@ kotlin {
     }
 }
 
+// Copy built files into target/renderer/
+tasks.register<Copy>("copyRendererJsFiles") {
+    group = "custom"
+    description = "Copy JS files to target directory after compileSync"
+
+    from(projectDir.resolve("build/compileSync/js/main/developmentExecutable/kotlin"))
+    into(rootDir.resolve("target/renderer/"))
+
+    dependsOn("jsDevelopmentExecutableCompileSync")
+}
+
+tasks.named("jsDevelopmentExecutableCompileSync") {
+    finalizedBy("copyRendererJsFiles")
+}

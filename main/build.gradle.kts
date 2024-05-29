@@ -24,3 +24,17 @@ kotlin {
     }
 }
 
+// copy built files into target/main/
+tasks.register<Copy>("copyMainJsFiles") {
+    group = "custom"
+    description = "Copy JS files to target directory after compileSync"
+
+    from(projectDir.resolve("build/compileSync/js/main/developmentExecutable/kotlin"))
+    into(rootDir.resolve("target/main/"))
+
+    dependsOn("jsDevelopmentExecutableCompileSync")
+}
+
+tasks.named("jsDevelopmentExecutableCompileSync") {
+    finalizedBy("copyMainJsFiles")
+}

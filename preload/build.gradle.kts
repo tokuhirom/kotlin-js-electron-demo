@@ -25,3 +25,17 @@ kotlin {
     }
 }
 
+// copy built files into target/preload/
+tasks.register<Copy>("copyPreloadJsFiles") {
+    group = "custom"
+    description = "Copy JS files to target directory after compileSync"
+
+    from(projectDir.resolve("build/compileSync/js/main/developmentExecutable/kotlin"))
+    into(rootDir.resolve("target/preload/"))
+
+    dependsOn("jsDevelopmentExecutableCompileSync")
+}
+
+tasks.named("jsDevelopmentExecutableCompileSync") {
+    finalizedBy("copyPreloadJsFiles")
+}

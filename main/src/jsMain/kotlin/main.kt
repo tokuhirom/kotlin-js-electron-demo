@@ -15,7 +15,7 @@ fun createWindow() {
 }
 
 fun main() {
-    println("Starting app..., so...")
+    println("Starting app..., so... GO!!! DOUKASHIRA???")
     try {
         println(app)
         app.whenReady().then {

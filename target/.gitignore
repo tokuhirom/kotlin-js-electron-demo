@@ -1,5 +1,5 @@
 *.js
 *.map
 main/
-rendeer/
+renderer/
 preload/
