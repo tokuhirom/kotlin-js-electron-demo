@@ -62,7 +62,7 @@ npx electron .
 
 ## Remaining tasks...
 
-- use react with kotlin-js
+- use React with kotlin-js
 - expose node functions to renderer process
 
 ## See also

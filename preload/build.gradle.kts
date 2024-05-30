@@ -14,7 +14,7 @@ kotlin {
             dependencies {
                 implementation(project.dependencies.platform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:1.0.0-pre.754"))
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-electron")
-                implementation(npm("electron", "30.0.8"))
+                implementation("org.jetbrains.kotlin-wrappers:kotlin-node")
             }
         }
         val jsTest by getting {
