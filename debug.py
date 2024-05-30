@@ -30,11 +30,16 @@ def main():
     gradle = subprocess.Popen(["./gradlew", "-t"] + tasks,
         stdout=sys.stdout, stderr=sys.stderr, cwd=script_dir)
 
-    # start the electron app in target/ directory
-    electron = subprocess.Popen(["npx", "electron", "."],
-        stdout=sys.stdout, stderr=sys.stderr, cwd=target_dir)
+    while True:
+        print("Starting electron app")
 
-    gradle.wait()
+        # start the electron app in target/ directory
+        electron = subprocess.Popen(["npx", "electron", "."],
+            stdout=sys.stdout, stderr=sys.stderr, cwd=target_dir)
+
+        electron.wait()
+
+        sleep(2)
 
 if __name__ == "__main__":
     main()

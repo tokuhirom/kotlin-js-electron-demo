@@ -34,6 +34,9 @@ fun main() {
             createWindow()
 
             app.on(AppEvent.ACTIVATE) { _, _ ->
+//                if (BrowserWindow.getAllWindows().isEmpty()) {
+//                    createWindow()
+//                }
                 if (js("BrowserWindow.getAllWindows().length == 0") as Boolean) {
                     createWindow()
                 }

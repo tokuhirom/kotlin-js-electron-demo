@@ -10,7 +10,7 @@ And there is no sample code around it.
 Therefore, this article introduces how to use Electron with Kotlin/JS by force.
 It's not so smart, but it's a way to use Electron with Kotlin/JS.
 
-## Environment
+## Directory structure
 
 This sample code has a following directory structure.
 
@@ -24,6 +24,7 @@ This sample code has a following directory structure.
     - package.json          # Configuation for Electron
     - index.html            # HTML file for Electron
     - preload.js            # Preload script for Electron
+    - forge.config.js       # Configuration for Electron Forge
 
   - main                    # Kotlin/JS code for the main process  
     - build.gradle.kts
@@ -40,16 +41,34 @@ On each module, Kotlin/JS code is written in `src/jsMain/kotlin` directory.
 
 You need to run the following command to build the Electron application.
 
+## preload.js issue
+
+I want to write a preload.js in Kotlin/JS, but I couldn't find a way to do it.
+So, I wrote it in JavaScript.
+
+If you can do it, please tell me how to do it.
+
+## How to debug
+
 ```shell
 ./debug.py
 ```
 
 It compiles Kotlin/JS code and copy it to the target directory by custom gradle task.
 
-## Remaining tasks...
+## How to build the package
 
-- use React with kotlin-js
-- expose node functions to renderer process
+Run following command to build a package.
+
+```shell
+cd target/
+npx electron-forge make
+```
+
+## Known issues
+
+- The preload.js is written in JavaScript.
+- `BrowserWindow.getAllWindows()` won't work.
 
 ## See also
 
