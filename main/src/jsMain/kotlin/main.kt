@@ -1,13 +1,20 @@
-import electron.BrowserWindow
 import electron.app
+import electron.core.AppEvent
+import electron.core.BrowserWindow
 import js.objects.jso
+import node.process.Platform
+import node.process.process
+import node.path.path
+
+@Suppress("ObjectPropertyName")
+external val __dirname: dynamic
 
 fun createWindow() {
     val win = BrowserWindow(jso {
         width = 800.0
         height = 600.0
         webPreferences = jso {
-            preload = js("require('node:path').join(__dirname, '../preload/preload.js')") as? String
+            preload = path.join(__dirname as String, "../preload/preload.js")
         }
         this.webPreferences?.devTools = true
     })
@@ -15,15 +22,28 @@ fun createWindow() {
 }
 
 fun main() {
-    println("Starting app..., so... GO!!! DOUKASHIRA???")
+    println("Starting app...")
     try {
         println(app)
         app.whenReady().then {
             createWindow()
+
+            app.on(AppEvent.ACTIVATE) { _, _ ->
+                if (BrowserWindow.getAllWindows().isEmpty()) {
+                    createWindow()
+                }
+            }
         }
 
-        console.log("Hello Console World! darobe!YABAME!!")
+        app.on(AppEvent.WINDOW_ALL_CLOSED) {
+            if (process.platform != Platform.darwin) {
+                app.quit()
+            }
+        }
+
+        console.log("Completed app initialization!");
     } catch (e: Throwable) {
         console.error(e)
     }
+
 }

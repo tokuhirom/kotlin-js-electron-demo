@@ -60,6 +60,11 @@ npm install
 npx electron .
 ```
 
+## Remaining tasks...
+
+- use react with kotlin-js
+- expose node functions to renderer process
+
 ## See also
 
 - https://github.com/JetBrains/kotlin-wrappers/blob/master/kotlin-electron/README.md

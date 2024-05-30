@@ -9,6 +9,7 @@ kotlin {
         moduleName = "main"
         nodejs {
         }
+        useEsModules()
         binaries.executable()
     }
     sourceSets {
