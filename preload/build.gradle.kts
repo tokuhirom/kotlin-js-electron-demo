@@ -14,7 +14,6 @@ kotlin {
             dependencies {
                 implementation(project.dependencies.platform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:1.0.0-pre.754"))
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-electron")
-                implementation("org.jetbrains.kotlin-wrappers:kotlin-node")
             }
         }
         val jsTest by getting {
@@ -26,7 +25,7 @@ kotlin {
 }
 
 // copy built files into target/preload/
-tasks.register<Copy>("copyPreloadJsFiles") {
+tasks.register<Copy>("copyJsFiles") {
     group = "custom"
     description = "Copy JS files to target directory after compileSync"
 
@@ -37,5 +36,5 @@ tasks.register<Copy>("copyPreloadJsFiles") {
 }
 
 tasks.named("jsDevelopmentExecutableCompileSync") {
-    finalizedBy("copyPreloadJsFiles")
+    finalizedBy("copyJsFiles")
 }

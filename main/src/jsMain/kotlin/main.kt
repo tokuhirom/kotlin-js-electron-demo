@@ -1,20 +1,20 @@
 import electron.app
 import electron.core.AppEvent
-import electron.core.BrowserWindow
+import electron.ipcMain
+import electron.BrowserWindow
 import js.objects.jso
-import node.process.Platform
-import node.process.process
-import node.path.path
 
-@Suppress("ObjectPropertyName")
-external val __dirname: dynamic
+//@Suppress("ObjectPropertyName")
+//external val __dirname: dynamic
 
 fun createWindow() {
     val win = BrowserWindow(jso {
         width = 800.0
         height = 600.0
         webPreferences = jso {
-            preload = path.join(__dirname as String, "../preload/preload.js")
+            preload = js("(import.meta.dirname) + '/../preload/preload.js'") as String?
+//            preload = js("require('node:path').join(__dirname, '../preload/preload.mjs')") as String?
+//            preload = path.join(__dirname as String, "../preload/preload.mjs")
         }
         this.webPreferences?.devTools = true
     })
@@ -26,17 +26,21 @@ fun main() {
     try {
         println(app)
         app.whenReady().then {
+            ipcMain.handle("ping") {
+                "pong"
+            }
+
             createWindow()
 
             app.on(AppEvent.ACTIVATE) { _, _ ->
-                if (BrowserWindow.getAllWindows().isEmpty()) {
+                if (js("BrowserWindow.getAllWindows().length == 0") as Boolean) {
                     createWindow()
                 }
             }
         }
 
         app.on(AppEvent.WINDOW_ALL_CLOSED) {
-            if (process.platform != Platform.darwin) {
+            if (js("process.platform") != "darwin") {
                 app.quit()
             }
         }

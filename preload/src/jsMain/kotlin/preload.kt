@@ -1,14 +1,16 @@
 import electron.contextBridge
 import js.objects.jso
-import node.process.process
 
 external interface MyApi {
     var node: String
+//    var ping: () -> Promise<Any?>
 }
 
 fun main() {
     val myApi : MyApi = jso {
-        node = process.versions.node
+        node = js("process.versions.node") as String
+//        ping = { ipcRenderer.invoke("ping") }
     }
+    console.log("Loading preload script...")
     contextBridge.exposeInMainWorld("versions", myApi)
 }

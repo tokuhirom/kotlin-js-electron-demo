@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalDistributionDsl
-
 plugins {
     kotlin("multiplatform") version "2.0.0"
 }
@@ -26,7 +24,7 @@ kotlin {
 }
 
 // copy built files into target/main/
-tasks.register<Copy>("copyMainJsFiles") {
+tasks.register<Copy>("copyJsFiles") {
     group = "custom"
     description = "Copy JS files to target directory after compileSync"
 
@@ -37,5 +35,5 @@ tasks.register<Copy>("copyMainJsFiles") {
 }
 
 tasks.named("jsDevelopmentExecutableCompileSync") {
-    finalizedBy("copyMainJsFiles")
+    finalizedBy("copyJsFiles")
 }

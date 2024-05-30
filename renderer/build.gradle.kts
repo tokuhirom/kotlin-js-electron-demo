@@ -29,7 +29,7 @@ kotlin {
 }
 
 // Copy built files into target/renderer/
-tasks.register<Copy>("copyRendererJsFiles") {
+tasks.register<Copy>("copyJsFiles") {
     group = "custom"
     description = "Copy JS files to target directory after compileSync"
 
@@ -40,5 +40,5 @@ tasks.register<Copy>("copyRendererJsFiles") {
 }
 
 tasks.named("jsDevelopmentExecutableCompileSync") {
-    finalizedBy("copyRendererJsFiles")
+    finalizedBy("copyJsFiles")
 }
