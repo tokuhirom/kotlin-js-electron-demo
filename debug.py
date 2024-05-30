@@ -13,18 +13,21 @@ def main():
     target_dir = os.path.join(script_dir, "target")
 
     # clean the old files...
-    for d in ["preload", "renderer", "main"]:
+    for d in ["renderer", "main"]:
         print(f"Cleaning target/{d} directory")
         shutil.rmtree(os.path.join(target_dir, d), ignore_errors=True)
 
-    tasks = [':preload:jsBrowserDevelopmentWebpack', 'jsDevelopmentExecutableCompileSync']
+    tasks = ['jsDevelopmentExecutableCompileSync']
 
     # Run the gradle task to compile the Kotlin/JS code
+    # This will make all files before running the electron app
     subprocess.run(["./gradlew"] + tasks,
         stdout=sys.stdout, stderr=sys.stderr, cwd=script_dir)
 
     # Run the gradle task to compile the Kotlin/JS code, continuously
-    gradle = subprocess.Popen(["./gradlew","-t"] + tasks,
+    # This will watch for changes in the Kotlin/JS code and recompile
+    # (in Background)
+    gradle = subprocess.Popen(["./gradlew", "-t"] + tasks,
         stdout=sys.stdout, stderr=sys.stderr, cwd=script_dir)
 
     # start the electron app in target/ directory

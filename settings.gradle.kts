@@ -5,5 +5,4 @@ plugins {
 rootProject.name = "kotlin-js-electron-demo"
 
 include(":main")
-include(":preload")
 include(":renderer")

@@ -1,8 +1,11 @@
+import electron.BrowserWindow
 import electron.app
 import electron.core.AppEvent
 import electron.ipcMain
-import electron.BrowserWindow
 import js.objects.jso
+import node.path.path
+import node.process.Platform
+import node.process.process
 
 //@Suppress("ObjectPropertyName")
 //external val __dirname: dynamic
@@ -12,9 +15,7 @@ fun createWindow() {
         width = 800.0
         height = 600.0
         webPreferences = jso {
-            preload = js("(import.meta.dirname) + '/../preload/preload.js'") as String?
-//            preload = js("require('node:path').join(__dirname, '../preload/preload.mjs')") as String?
-//            preload = path.join(__dirname as String, "../preload/preload.mjs")
+            preload = path.join(js("(import.meta.dirname)") as String, "/../preload.js")
         }
         this.webPreferences?.devTools = true
     })
@@ -40,7 +41,7 @@ fun main() {
         }
 
         app.on(AppEvent.WINDOW_ALL_CLOSED) {
-            if (js("process.platform") != "darwin") {
+            if (process.platform != Platform.darwin) {
                 app.quit()
             }
         }
